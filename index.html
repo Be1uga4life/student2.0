@@ -1,0 +1,174 @@
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+  <style>
+    body {
+      font-family: 'Segoe UI', Tahoma, Geneva, Verdana, sans-serif;
+      background-color: #1a1a1a;
+      margin: 0;
+      display: flex;
+      align-items: center;
+      justify-content: center;
+      height: 100vh;
+      color: #fff;
+    }
+
+    .container {
+      max-width: 400px;
+      margin: 0 auto;
+      padding: 30px;
+      background-color: #2a2a2a;
+      border-radius: 12px;
+      box-shadow: 0 0 20px rgba(255, 255, 255, 0.1);
+    }
+
+    label {
+      display: block;
+      margin-bottom: 15px;
+      color: #fff;
+      font-size: 16px;
+    }
+
+    input {
+      width: 100%;
+      padding: 15px;
+      margin: 10px 0;
+      border: 1px solid #000;
+      border-radius: 8px;
+      font-family: 'Segoe UI', Tahoma, Geneva, Verdana, sans-serif;
+      box-sizing: border-box;
+      color: #fff;
+      background-color: #333;
+      outline: none;
+    }
+
+    input:focus {
+      border-color: #297bb3;
+    }
+
+    input[type="submit"] {
+      width: 100%;
+      padding: 15px;
+      margin: 10px 0;
+      background-color: #000;
+      color: white;
+      border: none;
+      border-radius: 8px;
+      font-family: 'Segoe UI', Tahoma, Geneva, Verdana, sans-serif;
+      cursor: pointer;
+      transition: background-color 0.3s ease;
+    }
+
+    input[type="submit"]:hover {
+      background-color: #333;
+    }
+
+    .signup-link {
+      text-align: center;
+      margin-top: 20px;
+      font-size: 14px;
+    }
+
+    .signup-link a {
+      color: #4ea0d5;
+      text-decoration: none;
+      font-weight: bold;
+    }
+
+    .signup-link a:hover {
+      text-decoration: underline;
+    }
+
+    .centered-text {
+      text-align: left;
+      padding-top: 5px;
+      margin-left: 170px; /* Adjust the margin as needed */
+    }
+
+    .centered-image {
+      text-align: center;
+      margin-top: 20px;
+    }
+  </style>
+
+</head>
+
+<body>
+  <div class="centered-text">
+    <h1>Welcome to Eric's Blog</h1><br><br>
+    <div class="centered-image">
+    </div>
+  </div>
+
+  <div class="container">
+    <label for="uid">User ID</label>
+    <input type="text" id="uid" name="uid"><br>
+    <label for="password">Password</label>
+    <input type="password" id="password" name="password"><br>
+    <input type="submit" value="Login">
+    <div class="error-message" id="error-message"></div>
+    <div class="signup-link">
+      <a href="./register.html">Sign Up</a>
+    </div>
+  </div>
+
+  <script>
+    const apiUrl = "http://127.0.0.1:8086/api/users/authenticate";
+
+    document.querySelector(".container input[type='submit']").onclick = async function () {
+      const uid = document.getElementById("uid").value;
+      const password = document.getElementById("password").value;
+      const errorMessageElement = document.getElementById("error-message");
+
+      const obj = { uid: uid, password: password };
+
+      try {
+        const response = await fetch(apiUrl, {
+          method: "POST",
+          headers: {
+            "Content-Type": "application/json"
+          },
+          body: JSON.stringify(obj)
+        });
+
+        if (!response.ok) {
+          throw new Error('Authentication request was not successful');
+        }
+
+        const token = await response.text();
+
+        if (token) {
+          // Authentication was successful, you can handle the token as needed
+          console.log('Authentication successful');
+          document.cookie = `token=${token}; path=/`;
+
+          localStorage.setItem("token", token);
+          localStorage.setItem("flagData", 1);
+
+
+          const username = document.getElementById("uid").value;
+
+  // Check if a username is entered
+  if (username) {
+    // Display personalized greeting message
+    alert(`Welcome, ${username}! Redirecting you to the homepage, hold on!`);
+  }
+          window.location.href = "./AD_compsci";
+          window.location.replace("./AD_compsci");
+
+        } else {
+  // Authentication failed, show an error message
+  console.error('Authentication failed');
+  errorMessageElement.textContent = 'Authentication failed. Please check your credentials.';
+  alert('Incorrect username or password');
+}
+} catch (error) {
+  console.error('Error:', error);
+  alert('Error during authentication. Please check you credentials!.');
+}
+    }
+  </script>
+</body>
+
+</html>
