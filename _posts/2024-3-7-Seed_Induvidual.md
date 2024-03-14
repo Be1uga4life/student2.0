@@ -1,7 +1,6 @@
 ---
 toc: True
-comments: True
-layout: post
+comments: False
 title: Seed Induvidual
 description: None
 type: tangibles
