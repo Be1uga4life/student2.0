@@ -35,4 +35,4 @@ Requirement #1: From VSCode using SQLite3 Editor, show your unique collection/ta
 This is the table that contains all the users that are allowed to login in the spotify application, their password is contained as a hashed password.
 
 Requirement #2: From VSCode model, show your unique code that was created to initialize table and create test data.
-![smthing](https://files.slack.com/files-tmb/TUDAF53UJ-F06UPDP4E78-8c295adec5/image_720.png)
+![smthing](https://files.slack.com/files-pri/TUDAF53UJ-F06UPDP4E78/image.png)
